@@ -42,8 +42,8 @@ jobs:
       - checkout  
       - docker/check
       - docker/build:
-          image: docker build -t $DOCKER_LOGIN/$CIRCLE_PROJECT_REPONAME
-          tag: 0.1.<<pipeline.number>>
+          image: $DOCKER_LOGIN/$CIRCLE_PROJECT_REPONAME
+          tag: docker build -t $DOCKER_LOGIN/$CIRCLE_PROJECT_REPONAME:0.1.<<pipeline.number>>
       - docker/push:
           image: $DOCKER_LOGIN/$CIRCLE_PROJECT_REPONAME
           tag: 0.1.<<pipeline.number>>
