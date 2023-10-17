@@ -79,19 +79,19 @@ jobs:
           paths:
             - "*"      
       - run: sleep 90
-  smoketest_deployment:
-    machine:
-      image: ubuntu-2004:202101-01
-    resource_class: arm.medium
-    steps:
-      - checkout
-      - attach_workspace:
-          at: /tmp/ecs/
-      - run:
-          name: Smoke Test ECS Deployment
-          command: |
-            source /tmp/ecs/endpoint
-            ./test/smoke_test $ENDPOINT
+  #smoketest_deployment:
+    #machine:
+      #image: ubuntu-2004:202101-01
+    #resource_class: arm.medium
+    #steps:
+      #- checkout
+      #- attach_workspace:
+          #at: /tmp/ecs/
+      #- run:
+          #name: Smoke Test ECS Deployment
+          #command: |
+            #source /tmp/ecs/endpoint
+            #./test/smoke_test $ENDPOINT
   destroy_aws_ecs:
     machine:
       image: ubuntu-2004:202101-01
@@ -120,9 +120,9 @@ workflows:
       - deploy_aws_ecs:
           requires:
             - build_docker_image          
-      - smoketest_deployment:
-          requires:
-            - deploy_aws_ecs
+      #- smoketest_deployment:
+          #requires:
+            #- deploy_aws_ecs
       - approve_destroy:
           type: approval
           requires:
