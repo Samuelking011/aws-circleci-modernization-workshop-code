@@ -42,8 +42,8 @@ jobs:
       - checkout  
       - docker/check
       - docker/build:
-          image: $DOCKER_LOGIN/$CIRCLE_PROJECT_REPONAME
-          tag: docker build -t docker.io/$CIRCLE_PROJECT_REPONAME:latest
+          image: $DOCKER_LOGIN/$CIRCLE_PROJECT_REPONAME:1.0
+          tag: latest
       - docker/push:
           image: $DOCKER_LOGIN/$CIRCLE_PROJECT_REPONAME
           tag: latest
