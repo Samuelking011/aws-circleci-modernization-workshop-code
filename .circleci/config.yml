@@ -42,10 +42,10 @@ jobs:
       - checkout  
       - docker/check
       - docker/build:
-          image: -t $DOCKER_LOGIN/$CIRCLE_PROJECT_REPONAME
+          image: docker build -t $DOCKER_LOGIN/$CIRCLE_PROJECT_REPONAME
           tag: 0.1.<<pipeline.number>>
       - docker/push:
-          image: -t $DOCKER_LOGIN/$CIRCLE_PROJECT_REPONAME
+          image: $DOCKER_LOGIN/$CIRCLE_PROJECT_REPONAME
           tag: 0.1.<<pipeline.number>>
   deploy_aws_ecs:
     machine:
