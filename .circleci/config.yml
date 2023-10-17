@@ -43,7 +43,7 @@ jobs:
       - docker/check
       - docker/build:
           image: $DOCKER_LOGIN/$CIRCLE_PROJECT_REPONAME:1.0
-          tag: latest
+          #tag: latest
       - docker/push:
           image: $DOCKER_LOGIN/$CIRCLE_PROJECT_REPONAME
           tag: latest
