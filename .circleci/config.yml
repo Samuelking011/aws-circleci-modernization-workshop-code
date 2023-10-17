@@ -125,7 +125,7 @@ workflows:
             #- deploy_aws_ecs
       - approve_destroy:
           type: approval
-          #requires:
+          requires:
             - deploy_aws_ecs
            # - smoketest_deployment
       - destroy_aws_ecs:
