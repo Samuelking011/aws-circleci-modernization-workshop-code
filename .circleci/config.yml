@@ -46,7 +46,7 @@ jobs:
           #tag: 0.1.<< pipeline.number >>
       - docker/push:
           image: $DOCKER_LOGIN/example
-          tag: 0.1.<< pipeline.number >>
+          #tag: 0.1.<< pipeline.number >>
   deploy_aws_ecs:
     machine:
       image: ubuntu-2004:202101-01
