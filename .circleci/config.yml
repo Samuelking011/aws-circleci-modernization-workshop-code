@@ -42,11 +42,11 @@ jobs:
       - checkout  
       - docker/check
       - docker/build:
-          image: $DOCKER_LOGIN/example
-          #tag: 0.1.<< pipeline.number >>
+          image: $DOCKER_LOGIN/$CIRCLE_PROJECT_REPONAME:1.0
+          #tag: latest
       - docker/push:
-          image: $DOCKER_LOGIN/example
-          #tag: 0.1.<< pipeline.number >>
+          image: $DOCKER_LOGIN/$CIRCLE_PROJECT_REPONAME
+          tag: latest
   deploy_aws_ecs:
     machine:
       image: ubuntu-2004:202101-01
@@ -79,19 +79,19 @@ jobs:
           paths:
             - "*"      
       - run: sleep 90
-  #smoketest_deployment:
-    #machine:
-      #image: ubuntu-2004:202101-01
-    #resource_class: arm.medium
-    #steps:
-      #- checkout
-      #- attach_workspace:
-          #at: /tmp/ecs/
-      #- run:
-          #name: Smoke Test ECS Deployment
-          #command: |
-            #source /tmp/ecs/endpoint
-            #./test/smoke_test $ENDPOINT
+  smoketest_deployment:
+    machine:
+      image: ubuntu-2004:202101-01
+    resource_class: arm.medium
+    steps:
+      - checkout
+      - attach_workspace:
+          at: /tmp/ecs/
+      - run:
+          name: Smoke Test ECS Deployment
+          command: |
+            source /tmp/ecs/endpoint
+            ./test/smoke_test $ENDPOINT
   destroy_aws_ecs:
     machine:
       image: ubuntu-2004:202101-01
@@ -120,14 +120,13 @@ workflows:
       - deploy_aws_ecs:
           requires:
             - build_docker_image          
-      #- smoketest_deployment:
-          #requires:
-            #- deploy_aws_ecs
+      - smoketest_deployment:
+          requires:
+            - deploy_aws_ecs
       - approve_destroy:
           type: approval
           requires:
-            - deploy_aws_ecs
-           # - smoketest_deployment
+            - smoketest_deployment
       - destroy_aws_ecs:
           requires:
             - approve_destroy
