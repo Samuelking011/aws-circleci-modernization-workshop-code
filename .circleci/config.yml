@@ -42,11 +42,11 @@ jobs:
       - checkout  
       - docker/check
       - docker/build:
-          image: $DOCKER_LOGIN/$CIRCLE_PROJECT_REPONAME:1.0
-          #tag: latest
+          image: $DOCKER_LOGIN/example
+          #tag: 0.1.<< pipeline.number >>
       - docker/push:
-          image: $DOCKER_LOGIN/$CIRCLE_PROJECT_REPONAME
-          tag: latest
+          image: $DOCKER_LOGIN/example
+          tag: 0.1.<< pipeline.number >>
   deploy_aws_ecs:
     machine:
       image: ubuntu-2004:202101-01
